@@ -13,7 +13,7 @@ const Land = () => {
         <div className='Land'>
             <div className="LandNavbar">
                 <div className="lnLeft">
-                    <div className="inlLogo"></div>
+                    <div className="inlLogo" onClick={()=>navigate("/")}></div>
                 </div>
                 <div className="lnRight">
                     <div

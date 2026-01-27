@@ -106,7 +106,7 @@ html, body, #root {
     content: "";
     position: absolute;
     inset: 0;
-    background-color: rgba(255, 255, 255, 0.3); 
+    background-color: rgba(255, 255, 255, 0.1); 
     /* ↑ increase/decrease to control image fade */
     z-index: 1;
 }
@@ -189,21 +189,36 @@ html, body, #root {
     border-radius: 14px;
     cursor: pointer;
     transition: all 0.3s ease;
+    cursor: pointer;
+    animation: colorShift 0.5s ease-in-out infinite alternate;
+    animation: bounce 0.7s ease-in-out infinite;
+}
+
+@keyframes colorShift {
+    0% {
+        background-color: #0f172a;
+        border: 2px solid #3b82f6;
+    }
+    100% {
+        background-color: #204072;
+        border: 2px solid #0f172a;
+    }
 }
 
 .homeBtn:hover {
-    background-color: #02042a;
+    background-color: #2563eb;
+    color: white;
     transform: translateY(-2px);
 }
 
 /* ---------- BOUNCING QUESTION MARK ---------- */
 .bigQuestion {
-    font-size: 420px;
+    font-size: 450px;
     font-weight: 900;
     color: #0f172a;
     line-height: 1;
 
-    animation: bounce 2s ease-in-out infinite;
+    animation: bounce 0.7s ease-in-out infinite;
 }
 
 @keyframes bounce {
@@ -221,6 +236,7 @@ html, body, #root {
     }
 }
 
+/* ================= GET STARTED ================= */
 
 .GetStarted{
     height: 100%;
@@ -231,81 +247,89 @@ html, body, #root {
     background: linear-gradient(180deg, #c0c2e1 0%, #3137a1 100%);
 }
 
-.gsTop, .gsBot{
+/* rows */
+.gsTop{
     display: flex;
     justify-content: space-evenly;
 }
+.gsBot{
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 160px;
+    gap: 165px;
+}
+
+/* card */
 .gsCard{
-    width: 220px;
-    height: 260px;
-    background-color: #ffffff;
-    border-radius: 16px;
+    width: 240px;
+    height: 250px;
+    background: #ffffff;
+    border-radius: 22px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     cursor: pointer;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
+
+    box-shadow: 0 12px 35px rgba(15, 23, 42, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .gsCard:hover{
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    transform: translateY(-10px);
+    box-shadow: 0 22px 45px rgba(15, 23, 42, 0.25);
 }
+
+/* image area */
 .gsImg{
     flex: 1;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    padding: 20px;
 }
 
-/* Individual images */
+/* REMOVE harsh yellow background */
+.user,
+.municipal,
+.electrical,
+.water,
+.road{
+    background-color: transparent;
+}
+
+/* individual images */
 .user{
-    background-color: rgb(226, 235, 104);
     background-image: url("./images/user.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
 }
 .municipal{
-    background-color: rgb(226, 235, 104);
     background-image: url("./images/municipal.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
 }
 .electrical{
-    background-color: rgb(226, 235, 104);
     background-image: url("./images/electrical.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
 }
 .water{
-    background-color: rgb(226, 235, 104);
     background-image: url("./images/water.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
 }
 .road{
-    background-color: rgb(226, 235, 104);
     background-image: url("./images/road.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
 }
+
+/* text bar */
 .gsText{
     height: 60px;
     background-color: #0f172a;
-    color: white;
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 15px;
+
+    font-size: 16px;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
 }
+
 
 
 .UserEnter {

@@ -1,23 +1,31 @@
-const LandHome = () => {
-    return (
-        <div className='LandHome'>
-            <div className="lhLeft"></div>
-            <div className="lhRight">
-                <h1 className="animate-title">
-                    AI-Powered Community Issue Resolution Platform
-                </h1>
+import { useNavigate } from "react-router-dom";
 
-                <h3 className="animate-line delay1">
-                    Report real-world community problems using images
-                </h3>
-                <h3 className="animate-line delay2">
-                    AI classifies and prioritizes issues automatically
-                </h3>
-                <h3 className="animate-line delay3">
-                    Track complaints transparently from report to resolution
-                </h3>
+const LandHome = () => {
+    const navigate = useNavigate();
+
+    return (
+        <div className="LandHome">
+            {/* LEFT TEXT */}
+            <div className="homeLeft">
+                <div className="homeText">
+                    <div className="homeLine static">Need A</div>
+                    <div className="homeLine static">Better</div>
+                    <div className="homeLine typing">Tomorrow</div>
+                </div>
+            </div>
+
+            {/* RIGHT QUESTION */}
+            <div className="homeRight">
+                <div className="bigQuestion">?</div>
+                <div
+                    className="homeBtn"
+                    onClick={() => navigate("/Start")}
+                >
+                    Click Here
+                </div>
             </div>
         </div>
-    )
-}
-export default LandHome
+    );
+};
+
+export default LandHome;

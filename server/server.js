@@ -18,12 +18,12 @@ app.get("/", (req, res) => {
 
 
 const transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-                user: "sachithbalaka@gmail.com",     // ✅ Replace with your Gmail address
-                pass: "pcgksspwidoackt d".replace(/\s+/g, ""), // ✅ App password (no spaces)
-            },
-        });
+    service: "gmail",
+    auth: {
+        user: "sachithbalaka@gmail.com",     // ✅ Replace with your Gmail address
+        pass: "pcgksspwidoackt d".replace(/\s+/g, ""), // ✅ App password (no spaces)
+    },
+});
 
 app.post("/send_otp", async (req, res) => {
     const { email } = req.body;

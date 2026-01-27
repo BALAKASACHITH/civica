@@ -2,6 +2,10 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import GetStarted from './GetStarted'
 import LandHome from './LandHome'
 import UserEnter from './UserEnter'
+import MunicipalEnter from './MunicipalEnter'
+import WaterEnter from './WaterEnter'
+import ElectricEnter from './ElectricEnter'
+import RoadEnter from './RoadEnter'
 const Land = () => {
     const navigate = useNavigate()
     const location = useLocation()
@@ -31,6 +35,10 @@ const Land = () => {
                     <Route path='/' element={<LandHome />} />
                     <Route path='/Start' element={<GetStarted />} />
                     <Route path='/Start/User' element={<UserEnter />} ></Route>
+                    <Route path='/Start/Electric' element={<ElectricEnter />} ></Route>
+                    <Route path='/Start/Water' element={<WaterEnter />} ></Route>
+                    <Route path='/Start/Municipal' element={<MunicipalEnter />} ></Route>
+                    <Route path='/Start/Road' element={<RoadEnter />} ></Route>
                 </Routes>
             </div>
         </div>

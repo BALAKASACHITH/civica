@@ -166,106 +166,124 @@ const UserEnter = () => {
 
     return (
         <div className="UserEnter">
-            <div className="details">
+            <div className="UserEnterLeft">
+                <div className="heroText">
+                    <div className="line line1">FOR : </div>
 
-                {/* 🔹 SIGN IN */}
-                {signinDiv && (
-                    <div className="formBox">
-                        <h2>Sign In</h2>
+                    <div className="line line2">
+                        <span className="word active">SMARTER</span>
+                        <span className="word">FASTER</span>
+                        <span className="word">EVERY</span>
+                    </div>
 
-                        <Input placeholder="Enter Email" value={email} setValue={setEmail} />
+                    <div className="line line3">
+                        <span className="word active">COMMUNITY</span>
+                        <span className="word">RESOLUTION</span>
+                        <span className="word">CITIZEN</span>
+                    </div>
+                </div>
+            </div>
+            <div className="UserEnterRight">
+                <div className="details">
+                    {/* 🔹 SIGN IN */}
+                    {signinDiv && (
+                        <div className="formBox">
+                            <h2>Sign In</h2>
 
-                        <div className="passBox">
-                            <input
+                            <Input placeholder="Enter Email" value={email} setValue={setEmail} />
+
+                            <div className="passBox">
+                                <input
+                                    type={showPass ? "text" : "password"}
+                                    placeholder="Enter Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                <i
+                                    className={`fa ${showPass ? "fa-eye-slash" : "fa-eye"}`}
+                                    onClick={() => setShowPass(!showPass)}
+                                ></i>
+                            </div>
+
+                            <Message kind={kind} text={msg} />
+
+                            <div className="detBot" onClick={handleSignin}>
+                                Sign In
+                            </div>
+
+                            <p className="link" onClick={showSignup}>Click here if new user</p>
+                        </div>
+                    )}
+
+                    {/* 🔹 SIGN UP */}
+                    {signupDiv && (
+                        <div className="formBox">
+                            <h2>Sign Up</h2>
+
+                            <Input placeholder="Enter Username" value={username} setValue={setUsername} />
+                            <Input placeholder="Enter Email" value={email} setValue={setEmail} />
+
+                            <Message kind={kind} text={msg} />
+
+                            <div className="detBot" onClick={sendOtp}>
+                                Next
+                            </div>
+
+                            <p className="link" onClick={showSignin}>Click here if old user</p>
+                        </div>
+                    )}
+
+                    {/* 🔹 OTP */}
+                    {otpDiv && (
+                        <div className="formBox">
+                            <h2>Verify OTP</h2>
+
+                            <Input placeholder="Enter OTP" value={otp} setValue={setOtp} />
+
+                            <Message kind={kind} text={msg} />
+
+                            <div className="detBot" onClick={verifyOtp}>
+                                Verify
+                            </div>
+
+                            <p className="link" onClick={showSignup}>Back</p>
+                        </div>
+                    )}
+
+                    {/* 🔹 PASSWORD */}
+                    {passwordDiv && (
+                        <div className="formBox">
+                            <h2>Create Password</h2>
+
+                            <div className="passBox">
+                                <input
+                                    type={showPass ? "text" : "password"}
+                                    placeholder="Enter Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                <i
+                                    className={`fa ${showPass ? "fa-eye-slash" : "fa-eye"}`}
+                                    onClick={() => setShowPass(!showPass)}
+                                ></i>
+                            </div>
+
+                            <Input
                                 type={showPass ? "text" : "password"}
-                                placeholder="Enter Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Confirm Password"
+                                value={confirmPassword}
+                                setValue={setConfirmPassword}
                             />
-                            <i
-                                className={`fa ${showPass ? "fa-eye-slash" : "fa-eye"}`}
-                                onClick={() => setShowPass(!showPass)}
-                            ></i>
+
+                            <Message kind={kind} text={msg} />
+
+                            <div className="detBot" onClick={finalSignup}>
+                                Signup
+                            </div>
                         </div>
+                    )}
 
-                        <Message kind={kind} text={msg} />
-
-                        <div className="detBot" onClick={handleSignin}>
-                            Sign In
-                        </div>
-
-                        <p className="link" onClick={showSignup}>Click here if new user</p>
-                    </div>
-                )}
-
-                {/* 🔹 SIGN UP */}
-                {signupDiv && (
-                    <div className="formBox">
-                        <h2>Sign Up</h2>
-
-                        <Input placeholder="Enter Username" value={username} setValue={setUsername} />
-                        <Input placeholder="Enter Email" value={email} setValue={setEmail} />
-
-                        <Message kind={kind} text={msg} />
-
-                        <div className="detBot" onClick={sendOtp}>
-                            Next
-                        </div>
-
-                        <p className="link" onClick={showSignin}>Click here if old user</p>
-                    </div>
-                )}
-
-                {/* 🔹 OTP */}
-                {otpDiv && (
-                    <div className="formBox">
-                        <h2>Verify OTP</h2>
-
-                        <Input placeholder="Enter OTP" value={otp} setValue={setOtp} />
-
-                        <Message kind={kind} text={msg} />
-
-                        <div className="detBot" onClick={verifyOtp}>
-                            Verify
-                        </div>
-
-                        <p className="link" onClick={showSignup}>Back</p>
-                    </div>
-                )}
-
-                {/* 🔹 PASSWORD */}
-                {passwordDiv && (
-                    <div className="formBox">
-                        <h2>Create Password</h2>
-
-                        <div className="passBox">
-                            <input
-                                type={showPass ? "text" : "password"}
-                                placeholder="Enter Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                            <i
-                                className={`fa ${showPass ? "fa-eye-slash" : "fa-eye"}`}
-                                onClick={() => setShowPass(!showPass)}
-                            ></i>
-                        </div>
-
-                        <Input
-                            type={showPass ? "text" : "password"}
-                            placeholder="Confirm Password"
-                            value={confirmPassword}
-                            setValue={setConfirmPassword}
-                        />
-
-                        <Message kind={kind} text={msg} />
-
-                        <div className="detBot" onClick={finalSignup}>
-                            Signup
-                        </div>
-                    </div>
-                )}
-
+                </div>
             </div>
         </div>
     );

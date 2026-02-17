@@ -120,9 +120,8 @@ const UserEnter = () => {
             if (res.data.success) {
                 setKind("good");
                 setMsg("Signup successful");
-                setTimeout(() => {
-                    navigate("/UserDashBoard");
-                }, 800);
+                localStorage.setItem("token", res.data.token);
+                navigate("/UserDashboard");
             } else {
                 setKind("bad");
                 setMsg(res.data.message);
@@ -132,7 +131,6 @@ const UserEnter = () => {
             setMsg("Signup failed");
         }
     };
-
 
     const handleSignin = async () => {
         if (!email || !password) {
@@ -150,19 +148,21 @@ const UserEnter = () => {
             if (res.data.success) {
                 setKind("good");
                 setMsg("Signin successful");
-                setTimeout(() => {
-                    navigate("/UserDashBoard");
-                }, 800);
+
+                // 🔐 Store JWT
+                localStorage.setItem("token", res.data.token);
+                navigate("/UserDashboard"); // make sure route name matches exactly
+
             } else {
                 setKind("bad");
-                setMsg(res.data.message);
+                setMsg(res.data.message || "Invalid credentials");
             }
-        } catch {
+
+        } catch (error) {
             setKind("bad");
-            setMsg("Signin failed");
+            setMsg("Server error during signin: " + error.message);
         }
     };
-
 
     return (
         <div className="UserEnter">

@@ -3,11 +3,14 @@ const express = require("express");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
 
 const User = require("./module/User");
 const Otp = require("./module/Otp");
 
 const app = express();
+const JWT_SECRET = "civica_secret_key";
+
 
 app.use(cors());
 app.use(express.json()); // ⭐ IMPORTANT
@@ -76,47 +79,72 @@ app.post("/signup", async (req, res) => {
         return res.json({ success: false, message: "Missing fields" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     try {
-        await User.create({ email, password: hashedPassword });
-        return res.json({ success: true, message: "Signup successful" });
-    } catch {
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.json({ success: false, message: "User already exists" });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const user = await User.create({
+            email,
+            password: hashedPassword
+        });
+
+        // 🔐 Generate JWT
+        const token = jwt.sign(
+            { email: user.email },
+            JWT_SECRET,
+            { expiresIn: "1d" }
+        );
+
+        return res.json({
+            success: true,
+            token
+        });
+
+    } catch (err) {
         return res.json({ success: false, message: "Signup failed" });
     }
 });
 app.post("/signin", async (req, res) => {
     const { email, password } = req.body;
+
     if (!email || !password) {
-        return res.json({
-            success: false,
-            message: "Email and password are required"
-        });
+        return res.json({ success: false, message: "Missing fields" });
     }
 
-    const user = await User.findOne({ email });
+    try {
+        const user = await User.findOne({ email });
 
-    if (!user || !user.password) {
+        if (!user) {
+            return res.json({ success: false, message: "User not found" });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.json({ success: false, message: "Invalid password" });
+        }
+
+        // 🔐 Generate JWT
+        const token = jwt.sign(
+            { email: user.email },
+            JWT_SECRET,
+            { expiresIn: "1d" }
+        );
+
         return res.json({
-            success: false,
-            message: "User not found or password not set"
+            success: true,
+            token
         });
+
+    } catch {
+        return res.json({ success: false, message: "Signin failed" });
     }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
-        return res.json({
-            success: false,
-            message: "Incorrect password"
-        });
-    }
-
-    return res.json({
-        success: true,
-        message: "Signin successful"
-    });
 });
+
 
 app.listen(2000,()=>{
     console.log("Server is running on port 2000");

@@ -614,3 +614,111 @@ html, body, #root {
 .municipalEnter .enterTop {
     background-image: url("./images/municipal.png");
 }
+/* ================= USER DASHBOARD ================= */
+
+.UserDashboard {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    background-color: #f8fafc;
+}
+
+/* ---------- LEFT SIDEBAR ---------- */
+.usdLeft {
+    border-right: 3px solid #3b82f6;
+    width: 20%;
+    height: 100%;
+    background-color: #0f172a;  /* brand primary */
+    color: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.usdlTop{
+    background-image: url("./images/civica_logo_2.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 10%;
+    width: 100%;
+    cursor: pointer;
+}
+.usdlMid{
+    height: 80%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+.usdlmOne{
+    padding-left: 20px;
+    width: 100%;
+    height: 48px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
+.usdlmTwo{
+    width: 100%;
+    padding-left: 20px;
+    height: 48px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
+.usdlmThree{
+    width: 100%;
+    padding-left: 20px;
+    height: 48px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
+/* ---------- SIDEBAR BOTTOM (LOGOUT) ---------- */
+.usdlBottom {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: #e5e7eb;
+    font-weight: 600;
+    font-size: 20px;
+    transition: 0.2s ease;
+}
+
+/* Logout hover effect */
+.usdlBottom:hover {
+    color: #ef4444; /* subtle red accent */
+}
+
+/* Sidebar icons spacing */
+.usdlMid div i,
+.usdlBottom i {
+    margin-right: 10px;
+}
+/* ---------- RIGHT CONTENT ---------- */
+.usdRight {
+    width: 80%;
+    height: 100%;
+    background-color: #f1f5f9; /* matches LandBody */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #0f172a;
+    font-size: 20px;
+    font-weight: 600;
+}

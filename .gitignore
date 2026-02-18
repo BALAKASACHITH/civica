@@ -10,3 +10,11 @@ yarn-error.log*
 
 # Environment files
 .env
+# Folders
+venv/
+database/
+__pycache__/
+
+# Files
+civica_classifier.h5
+class_names.py

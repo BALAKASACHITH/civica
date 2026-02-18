@@ -4,12 +4,18 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const path = require("path");
+
 
 const User = require("./module/User");
 const Otp = require("./module/Otp");
+const Complaint = require("./module/Complaint");
 
 const app = express();
 const JWT_SECRET = "civica_secret_key";
+
+app.use("/uploads", express.static("uploads"));
 
 
 app.use(cors());
@@ -145,6 +151,79 @@ app.post("/signin", async (req, res) => {
     }
 });
 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "uploads/");
+    },
+    filename: function (req, file, cb) {
+        const email = req.body.email.replace(/[@.]/g, "_");
+        const uniqueName =
+            email + "_" + Date.now() + path.extname(file.originalname);
+        cb(null, uniqueName);
+    }
+});
+
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+    fileFilter: function (req, file, cb) {
+        if (file.mimetype.startsWith("image/")) {
+            cb(null, true);
+        } else {
+            cb(new Error("Only image files are allowed"));
+        }
+    }
+});
+const axios = require("axios");
+
+app.post("/raise-complaint", upload.single("image"), async (req, res) => {
+    try {
+        const { email, description, lat, lng } = req.body;
+
+        if (!req.file || !email || !description || !lat || !lng) {
+            return res.json({
+                success: false,
+                message: "Missing fields"
+            });
+        }
+
+        // ✅ Get absolute image path (important for Python)
+        const imagePath = path.resolve(req.file.path);
+
+        // ✅ Call FastAPI AI server
+        const aiResponse = await axios.post(
+            "http://127.0.0.1:8000/predict",
+            { image_path: imagePath }
+        );
+
+        const department = aiResponse.data.department;
+
+        // ✅ Save complaint with department
+        const complaint = await Complaint.create({
+            email,
+            imagePath: req.file.path,
+            description,
+            location: {
+                lat: Number(lat),
+                lng: Number(lng)
+            },
+            department   // 👈 Added AI result here
+        });
+
+        return res.json({
+            success: true,
+            message: "Complaint submitted successfully",
+            department,   // 👈 Send AI result to frontend
+        });
+
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            success: false,
+            message: "Server error"
+        });
+    }
+});
 
 app.listen(2000,()=>{
     console.log("Server is running on port 2000");

@@ -19,8 +19,8 @@ const DepartmentEnter = ({ type }) => {
             username: "road",
             password: "road123",
         },
-        electrical: {
-            username: "electrical",
+        electric: {
+            username: "electric",
             password: "electric123",
         },
         municipal: {
@@ -38,23 +38,21 @@ const DepartmentEnter = ({ type }) => {
         }
 
         const creds = departmentCredentials[type];
-
+        console.log(creds);
         if (
             username === creds.username &&
             password === creds.password
         ) {
             setKind("good");
             setMsg("Login successful");
-
-            setTimeout(() => {
-                navigate(`/${type}Dashboard`);
-            }, 600);
+            const pascalType = type.charAt(0).toUpperCase() + type.slice(1);
+            navigate(`/${pascalType}Dashboard`);
         } else {
             setKind("bad");
-            setMsg("Invalid username or password");
+            const msg = `Invalid username or password. Expected: ${creds.username}/${creds.password}`;
+            setMsg(msg);
         }
     };
-
 
     return (
         <div className={`${type}Enter commonEnter`}>

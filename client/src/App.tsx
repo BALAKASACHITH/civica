@@ -3,7 +3,7 @@ import UserDashboard from './components/dashboards/userDashboard/UserDashboard'
 import WaterDashboard from './components/dashboards/WaterDashboard/WaterDashboard'
 import ElectricDashboard from './components/dashboards/ElectriDashboard/ElectricDashboard'
 import MunicipalDashboard from './components/dashboards/MunicipalDashboard/MunicipalDashboard'
-import RoadDashBoard from './components/dashboards/RoadDashboard/RoadDashBoard'
+import RoadDashboard from './components/dashboards/RoadDashboard/RoadDashboard'
 import {Routes,Route} from 'react-router-dom'
 const App = () => {
     return (
@@ -14,7 +14,7 @@ const App = () => {
                 <Route path='/WaterDashboard/*' element={<WaterDashboard/>} ></Route>
                 <Route path='/ElectricDashboard/*' element={<ElectricDashboard/>} ></Route>
                 <Route path='/MunicipalDashboard/*' element={<MunicipalDashboard/>} ></Route>
-                <Route path='/RoadDashboard/*' element={<RoadDashBoard/>} ></Route>
+                <Route path='/RoadDashboard/*' element={<RoadDashboard/>} ></Route>
             </Routes>
         </div>
     )

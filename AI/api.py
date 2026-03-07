@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from tensorflow.keras.applications.efficientnet import preprocess_input
 
 # ---------------- CONFIG ----------------
+
 MODEL_PATH = "civica_classifier.h5"
 CLASS_PATH = "class_names.npy"
 IMG_SIZE = (224, 224)

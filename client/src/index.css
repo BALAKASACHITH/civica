@@ -823,3 +823,132 @@ textarea {
 .rcMessage.bad {
     color: red;
 }
+/* ================= COMMON DEPARTMENT DASHBOARD ================= */
+
+.WaterDashboard,
+.ElectricDashboard,
+.RoadDashboard,
+.MunicipalDashboard {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    background-color: #f8fafc;
+    overflow: hidden;
+}
+
+/* LEFT SIDEBAR COMMON */
+.wdLeft, .edLeft, .rdLeft, .mdLeft {
+    border-right: 3px solid #3b82f6;
+    width: 20%;
+    height: 100%;
+    background-color: #0f172a;
+    color: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+}
+
+/* LOGO */
+.wdlTop, .edlTop, .rdlTop, .mdlTop {
+    background-image: url("./images/civica_logo_2.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 10%;
+    width: 100%;
+    cursor: pointer;
+}
+
+/* MID */
+.wdlMid, .edlMid, .rdlMid, .mdlMid {
+    height: 80%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* OPTION */
+.wdlmOne, .edlmOne, .rdlmOne, .mdlmOne {
+    padding-left: 20px;
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* LOGOUT */
+.wdlBottom, .edlBottom, .rdlBottom, .mdlBottom {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 18px;
+}
+
+.wdlBottom:hover,
+.edlBottom:hover,
+.rdlBottom:hover,
+.mdlBottom:hover {
+    color: #ef4444;
+}
+
+/* RIGHT CONTENT */
+.wdRight, .edRight, .rdRight, .mdRight {
+    width: 80%;
+    height: 100%;
+    background-color: #f1f5f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 600;
+}
+/* ================= DEPARTMENT COMPLAINTS ================= */
+
+.WaterComplaints,
+.RoadComplaints,
+.ElectricComplaints,
+.MunicipalComplaints {
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.deptContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.deptCard {
+    display: flex;
+    gap: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.deptCard img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.deptInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.deptInfo strong {
+    color: #3b82f6;
+}

@@ -225,6 +225,55 @@ app.post("/raise-complaint", upload.single("image"), async (req, res) => {
     }
 });
 
+// ================= FETCH DEPARTMENT COMPLAINTS =================
+
+// WATER
+app.get("/complaints/water", async (req, res) => {
+    try {
+        const complaints = await Complaint.find({ department: "water" })
+            .sort({ createdAt: -1 });
+
+        return res.json({ success: true, complaints });
+    } catch (err) {
+        return res.json({ success: false, message: "Server error" });
+    }
+});
+
+// ROAD
+app.get("/complaints/road", async (req, res) => {
+    try {
+        const complaints = await Complaint.find({ department: "road" })
+            .sort({ createdAt: -1 });
+
+        return res.json({ success: true, complaints });
+    } catch (err) {
+        return res.json({ success: false, message: "Server error" });
+    }
+});
+
+// ELECTRIC
+app.get("/complaints/electric", async (req, res) => {
+    try {
+        const complaints = await Complaint.find({ department: "electric" })
+            .sort({ createdAt: -1 });
+
+        return res.json({ success: true, complaints });
+    } catch (err) {
+        return res.json({ success: false, message: "Server error" });
+    }
+});
+
+// MUNICIPAL
+app.get("/complaints/municipal", async (req, res) => {
+    try {
+        const complaints = await Complaint.find({ department: "municipal" })
+            .sort({ createdAt: -1 });
+        return res.json({ success: true, complaints });
+    } catch (err) {
+        return res.json({ success: false, message: "Server error" });
+    }
+});
+
 app.listen(2000,()=>{
     console.log("Server is running on port 2000");
 })

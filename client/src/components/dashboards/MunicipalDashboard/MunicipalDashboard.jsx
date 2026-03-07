@@ -30,7 +30,7 @@ const MunicipalDashboard = () => {
                                     : "transparent"
                         }}
                     >
-                        <i className="fa-solid fa-file-lines"></i>
+                        <i className="fa-solid fa-file-lines"></i>&nbsp;
                         Complaints
                     </div>
                 </div>

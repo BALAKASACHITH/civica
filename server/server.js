@@ -274,6 +274,70 @@ app.get("/complaints/municipal", async (req, res) => {
     }
 });
 
+app.post("/update-status", async (req, res) => {
+
+    try {
+
+        const { complaintId, newStatus } = req.body;
+
+        if (!complaintId || !newStatus) {
+            return res.json({
+                success: false,
+                message: "Missing fields"
+            });
+        }
+
+        // find complaint
+        const complaint = await Complaint.findById(complaintId);
+
+        if (!complaint) {
+            return res.json({
+                success: false,
+                message: "Complaint not found"
+            });
+        }
+
+        const oldStatus = complaint.status;
+
+        // update status
+        complaint.status = newStatus;
+        await complaint.save();
+
+        // send email to user
+        const mailOptions = {
+            from: "sachithbalaka@gmail.com",
+            to: complaint.email,
+            subject: "Civica Complaint Status Update",
+            text: `Hello,
+
+Your complaint status has been updated.
+
+Previous Status: ${oldStatus}
+New Status: ${newStatus}
+
+Thank you for using Civica.`
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        return res.json({
+            success: true,
+            message: "Status updated and email sent"
+        });
+
+    } catch (err) {
+
+        console.log(err);
+
+        return res.json({
+            success: false,
+            message: "Server error"
+        });
+
+    }
+
+});
+
 app.listen(2000,()=>{
     console.log("Server is running on port 2000");
 })

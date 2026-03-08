@@ -620,6 +620,7 @@ html, body, #root {
     height: 100%;
     width: 100%;
     display: flex;
+    overflow: hidden;
     background-color: #f8fafc;
 }
 
@@ -1193,4 +1194,10 @@ textarea {
         opacity:1;
         transform:translateY(0);
 }
+}
+
+.UserComplaints{
+    height: 100%;
+    width: 100%;
+    padding: 20px;
 }

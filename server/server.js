@@ -370,6 +370,32 @@ app.get("/complaint-stats", async (req, res) => {
 
 });
 
+app.get("/user-complaints/:email", async (req, res) => {
+
+    try {
+
+        const { email } = req.params;
+
+        const complaints = await Complaint.find({ email })
+        .sort({ createdAt: -1 });
+
+        res.json({
+            success: true,
+            complaints
+        });
+
+    } catch (err) {
+
+        res.json({
+            success: false,
+            message: "Server error"
+        });
+
+    }
+
+});
+
+
 app.listen(2000,()=>{
     console.log("Server is running on port 2000");
 })

@@ -338,6 +338,38 @@ Thank you for using Civica.`
 
 });
 
+app.get("/complaint-stats", async (req, res) => {
+
+    try {
+
+        const stats = await Complaint.aggregate([
+            {
+                $group: {
+                    _id: {
+                        department: "$department",
+                        status: "$status"
+                    },
+                    count: { $sum: 1 }
+                }
+            }
+        ]);
+
+        res.json({
+            success: true,
+            stats
+        });
+
+    } catch (err) {
+
+        res.json({
+            success: false,
+            message: "Server error"
+        });
+
+    }
+
+});
+
 app.listen(2000,()=>{
     console.log("Server is running on port 2000");
 })

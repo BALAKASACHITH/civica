@@ -721,6 +721,7 @@ html, body, #root {
     color: #0f172a;
     font-size: 20px;
     font-weight: 600;
+    overflow-y: scroll;
 }
 /* ================= RAISE COMPLAINT ================= */
 
@@ -1100,4 +1101,96 @@ textarea {
     margin-top:40px;
     color:#777;
     font-size:16px;
+}
+
+.uh_container{
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    font-family:Arial;
+}
+
+/* Greeting Card */
+
+.uh_greetCard{
+    background:#e8f1ff;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:35px;
+    animation:uh_slide 0.5s ease;
+}
+
+.uh_greetHello{
+    font-size:18px;
+    color:#444;
+}
+
+.uh_greetName{
+    font-size:34px;
+    font-weight:bold;
+    color:#3b82f6;
+    margin-top:4px;
+    text-transform:capitalize;
+}
+
+/* Section */
+
+.uh_section{
+    margin-bottom:35px;
+    text-align: center;
+}
+
+.uh_sectionTitle{
+    margin-bottom:15px;
+    color: #02042a;
+}
+
+/* Grid */
+
+.uh_cardGrid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+    background:#e8f1ff;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+/* Cards */
+
+.uh_statCard{
+    background:#e8f1ff;
+    border-radius:10px;
+    padding:20px;
+    transition:0.2s;
+    box-shadow: 0 0 10px #3498db;
+}
+
+.uh_statCard:hover{
+    transform:translateY(-4px);
+}
+
+.uh_statCard p{
+    font-size:14px;
+    color:#666;
+    margin-bottom:6px;
+}
+
+.uh_statCard span{
+    font-size:28px;
+    font-weight:bold;
+    color:#3b82f6;
+}
+
+/* Animation */
+
+@keyframes uh_slide{
+    from{
+        opacity:0;
+        transform:translateY(-10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+}
 }

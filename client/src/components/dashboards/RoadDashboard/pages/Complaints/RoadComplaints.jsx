@@ -86,9 +86,9 @@ const RoadComplaints = () => {
     };
 
     // Filter complaints
-    const filteredComplaints = complaints.filter(
-        item => item.status === statusFilter
-    );
+    const filteredComplaints = complaints
+    .filter(item => item.status === statusFilter)
+    .sort((a, b) => b.priorityScore - a.priorityScore);
 
     if (loading) return <div className="RoadComplaints">Loading...</div>;
 

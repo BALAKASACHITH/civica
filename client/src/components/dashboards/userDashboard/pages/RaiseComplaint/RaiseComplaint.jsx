@@ -38,17 +38,87 @@ const RaiseComplaint = () => {
     const handleDrop = (e) => {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
-        if (file) {
-            setImage(file);
-        }
+        if (file) setImage(file);
     };
 
     const handleFileSelect = (e) => {
         const file = e.target.files[0];
-        if (file) {
-            setImage(file);
+        if (file) setImage(file);
+    };
+
+    // 🌦 Weather Score
+    const getWeatherScore = async (lat, lng) => {
+        try {
+            const res = await axios.get(
+                `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current_weather=true`
+            );
+
+            const windSpeed = res.data.current_weather.windspeed;
+
+            if (windSpeed > 25) return 3;
+            if (windSpeed > 15) return 2;
+
+            return 1;
+
+        } catch {
+            return 1;
         }
     };
+
+    // 🏥 Nearby Hospital Score
+    const getPlaceScore = async (lat, lng) => {
+        try {
+
+            const res = await axios.get(
+                `https://overpass-api.de/api/interpreter?data=[out:json];node(around:300,${lat},${lng})["amenity"="hospital"];out;`
+            );
+
+            if (res.data.elements.length > 0) return 3;
+
+            return 1;
+
+        } catch {
+            return 1;
+        }
+    };
+
+    // 🏙 Population Density Score
+    const getPopulationScore = async (lat, lng) => {
+        try {
+
+            const res = await axios.get(
+                `https://overpass-api.de/api/interpreter?data=[out:json];node(around:300,${lat},${lng})["building"];out;`
+            );
+
+            const count = res.data.elements.length;
+
+            if (count > 50) return 3;
+            if (count > 20) return 2;
+
+            return 1;
+
+        } catch {
+            return 1;
+        }
+    };
+
+    // 🚗 Traffic Score (Major Roads)
+    const getTrafficScore = async (lat, lng) => {
+        try {
+
+            const res = await axios.get(
+                `https://overpass-api.de/api/interpreter?data=[out:json];way(around:200,${lat},${lng})["highway"~"motorway|primary|trunk|secondary"];out;`
+            );
+
+            if (res.data.elements.length > 0) return 3;
+
+            return 1;
+
+        } catch {
+            return 1;
+        }
+    };
+
     // 🚀 Submit Complaint
     const handleSubmit = async () => {
 
@@ -65,6 +135,7 @@ const RaiseComplaint = () => {
         }
 
         try {
+
             const token = localStorage.getItem("token");
 
             if (!token) {
@@ -76,12 +147,35 @@ const RaiseComplaint = () => {
             const decoded = jwtDecode(token);
             const email = decoded.email;
 
+            // ⭐ Get all priority scores
+            const weatherScore = await getWeatherScore(location.lat, location.lng);
+            const placeScore = await getPlaceScore(location.lat, location.lng);
+            const populationScore = await getPopulationScore(location.lat, location.lng);
+            const trafficScore = await getTrafficScore(location.lat, location.lng);
+
+            // ⏰ Peak hour score
+            const hour = new Date().getHours();
+            let peakScore = 0;
+
+            if ((hour >= 7 && hour <= 10) || (hour >= 17 && hour <= 20)) {
+                peakScore = 2;
+            }
+
+            // 🧠 Final Priority Score
+            const priorityScore =
+                weatherScore +
+                placeScore +
+                populationScore +
+                trafficScore +
+                peakScore;
+
             const formData = new FormData();
             formData.append("email", email);
             formData.append("image", image);
             formData.append("description", description);
             formData.append("lat", location.lat);
             formData.append("lng", location.lng);
+            formData.append("priorityScore", priorityScore);
 
             const res = await axios.post(
                 "http://localhost:2000/raise-complaint",
@@ -102,22 +196,24 @@ const RaiseComplaint = () => {
                     `Complaint submitted successfully! Assigned to ${department.toUpperCase()} department.`
                 );
 
-                // Reset fields
                 setImage(null);
                 setDescription("");
                 setLocation(null);
 
             } else {
+
                 setKind("bad");
                 setMessage(res.data.message);
+
             }
 
         } catch (err) {
+
             setKind("bad");
             setMessage("Submission failed. Try again. Error: " + err.message);
+
         }
     };
-
 
     return (
         <div className="RaiseComplaint">
@@ -125,7 +221,6 @@ const RaiseComplaint = () => {
 
                 <h2>Raise Complaint</h2>
 
-                {/* Drag & Drop Area */}
                 <div
                     className="dropArea"
                     onDrop={handleDrop}
@@ -150,27 +245,23 @@ const RaiseComplaint = () => {
                     )}
                 </div>
 
-                {/* Description */}
                 <textarea
                     placeholder="Enter description..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
 
-                {/* Capture Location */}
                 <div className="locBtn" onClick={getLocation}>
                     <i className="fa-solid fa-location-dot"></i>&nbsp;
                     Capture Location
                 </div>
 
-                {/* Message */}
                 {message && (
                     <div className={`rcMessage ${kind}`}>
                         {message}
                     </div>
                 )}
 
-                {/* Submit */}
                 <div className="submitBtn" onClick={handleSubmit}>
                     Submit Complaint
                 </div>

@@ -178,7 +178,8 @@ const axios = require("axios");
 
 app.post("/raise-complaint", upload.single("image"), async (req, res) => {
     try {
-        const { email, description, lat, lng } = req.body;
+
+        const { email, description, lat, lng, priorityScore } = req.body;
 
         if (!req.file || !email || !description || !lat || !lng) {
             return res.json({
@@ -187,10 +188,10 @@ app.post("/raise-complaint", upload.single("image"), async (req, res) => {
             });
         }
 
-        // ✅ Get absolute image path (important for Python)
+        // Get absolute image path for Python model
         const imagePath = path.resolve(req.file.path);
 
-        // ✅ Call FastAPI AI server
+        // Call FastAPI AI server
         const aiResponse = await axios.post(
             "http://127.0.0.1:8000/predict",
             { image_path: imagePath }
@@ -198,7 +199,7 @@ app.post("/raise-complaint", upload.single("image"), async (req, res) => {
 
         const department = aiResponse.data.department;
 
-        // ✅ Save complaint with department
+        // Save complaint
         const complaint = await Complaint.create({
             email,
             imagePath: req.file.path,
@@ -207,21 +208,25 @@ app.post("/raise-complaint", upload.single("image"), async (req, res) => {
                 lat: Number(lat),
                 lng: Number(lng)
             },
-            department   // 👈 Added AI result here
+            department,
+            priorityScore: Number(priorityScore) || 0
         });
 
         return res.json({
             success: true,
             message: "Complaint submitted successfully",
-            department,   // 👈 Send AI result to frontend
+            department
         });
 
     } catch (err) {
+
         console.log(err);
+
         return res.json({
             success: false,
             message: "Server error"
         });
+
     }
 });
 

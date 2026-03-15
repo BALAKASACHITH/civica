@@ -33,7 +33,12 @@ const complaintSchema = new mongoose.Schema(
 
     department: {
         type: String,
-        default: null   // will be filled after Python classification
+        default: null   // filled after Python classification
+    },
+
+    priorityScore: {
+        type: Number,
+        default: 0
     },
 
     status: {

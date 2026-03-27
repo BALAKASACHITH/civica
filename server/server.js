@@ -25,7 +25,6 @@ app.get("/", (req, res) => {
     res.send("hello civica");
 });
 
-
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -127,7 +126,7 @@ app.post("/signin", async (req, res) => {
         if (!user) {
             return res.json({ success: false, message: "User not found" });
         }
-
+        
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {

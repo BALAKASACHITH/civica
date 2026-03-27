@@ -46,7 +46,7 @@ const UserEnter = () => {
     // 📩 SEND OTP
     const sendOtp = async () => {
         if (!email) {
-            setKind("bad");
+            setKind("bad")
             setMsg("Email is required");
             return;
         }
